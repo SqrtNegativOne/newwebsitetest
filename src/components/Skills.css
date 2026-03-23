@@ -1,0 +1,55 @@
+/* ── Skills grid ──────────────────────────────── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1.5rem 1rem;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skill-icon {
+  font-size: 2.2rem;
+  filter: grayscale(1);
+  transition: filter 0.4s ease, transform 0.3s ease;
+}
+
+.skill-item:hover .skill-icon {
+  filter: grayscale(0);
+  transform: translateY(-4px);
+}
+
+.skill-name {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+}
+
+.skill-item:hover .skill-name {
+  color: var(--text);
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1024px) and (min-width: 641px) {
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 1.2rem 0.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem 0.5rem;
+  }
+
+  .skill-icon {
+    font-size: 1.8rem;
+  }
+}

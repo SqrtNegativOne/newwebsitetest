@@ -1,25 +1,25 @@
 import { useRef, useEffect, useState } from "react";
 
 /**
- * Renders a portrait with Atkinson dithering applied via <canvas>.
+ * Renders a portrait with Bayer (ordered) dithering applied via <canvas>.
  *
- * Atkinson dithering (Bill Atkinson, Apple 1984):
- *  - Snaps each pixel to black or white
- *  - Spreads only 75% of the error to 6 neighbors (not 4)
- *  - The lost 25% is what gives it higher contrast and sharper edges
+ * Bayer dithering uses a threshold matrix instead of error diffusion.
+ * Each pixel is compared against a position-dependent threshold from
+ * a 4×4 Bayer matrix. This produces a regular, crosshatch-like pattern
+ * rather than the organic noise of error-diffusion methods.
  *
- * Error diffusion pattern (each neighbor gets 1/8 of the error):
- *
- *            [current]  +1/8   +1/8
- *      +1/8    +1/8     +1/8
- *               +1/8
+ * The 4×4 matrix values (0–15) are normalized to [0, 255] and tiled
+ * across the image. A pixel brighter than its threshold becomes white;
+ * otherwise it becomes black.
  */
 
-function addError(data, idx, error) {
-  data[idx] += error;
-  data[idx + 1] += error;
-  data[idx + 2] += error;
-}
+// Classic 4×4 Bayer threshold matrix (values 0–15)
+const BAYER_4x4 = [
+  [ 0,  8,  2, 10],
+  [12,  4, 14,  6],
+  [ 3, 11,  1,  9],
+  [15,  7, 13,  5],
+];
 
 export default function DitheredImage({ src, alt = "", className = "" }) {
   const canvasRef = useRef(null);
@@ -59,31 +59,18 @@ export default function DitheredImage({ src, alt = "", className = "" }) {
         data[i + 2] = gray;
       }
 
-      // Atkinson dithering
+      // Bayer ordered dithering
       for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
           const idx = (y * w + x) * 4;
-          const oldPixel = data[idx];
-          const newPixel = oldPixel < 128 ? 0 : 255;
-          // Only 6/8 of the error is diffused — the other 2/8 vanishes,
-          // which is what produces the higher-contrast look.
-          const err = (oldPixel - newPixel) / 8;
+          const gray = data[idx];
+          // Normalize the 4×4 matrix value (0–15) to a threshold in [0, 255]
+          const threshold = (BAYER_4x4[y % 4][x % 4] / 16) * 255;
+          const newPixel = gray > threshold ? 255 : 0;
 
           data[idx] = newPixel;
           data[idx + 1] = newPixel;
           data[idx + 2] = newPixel;
-
-          //  [X]  +1   +2
-          //  +3   +4   +5
-          //       +6
-          if (x + 1 < w) addError(data, idx + 4, err);                           // +1
-          if (x + 2 < w) addError(data, idx + 8, err);                           // +2
-          if (y + 1 < h) {
-            if (x - 1 >= 0) addError(data, ((y + 1) * w + (x - 1)) * 4, err);   // +3
-            addError(data, ((y + 1) * w + x) * 4, err);                          // +4
-            if (x + 1 < w) addError(data, ((y + 1) * w + (x + 1)) * 4, err);    // +5
-          }
-          if (y + 2 < h) addError(data, ((y + 2) * w + x) * 4, err);            // +6
         }
       }
 

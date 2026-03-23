@@ -1,49 +1,52 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 
 import Bio from "./components/Bio";
+import Skills from "./components/Skills";
+import Projects from "./components/Projects";
+import Blog from "./components/Blog";
+import Contact from "./components/Contact";
 import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
 import "./App.css";
 
+const views = { about: Bio, skills: Skills, projects: Projects, blog: Blog, contact: Contact };
+
 function App() {
+  const [view, setView] = useState("about");
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", "dark");
   }, []);
 
+  const ViewComponent = views[view];
+
   return (
     <div className="page">
-      {/* Portrait pinned to top-left */}
-      <div className="portrait-column">
-        <picture>
-          {/* Small layout (≤640px): image fills the screen → use portrait 2 */}
-          <source media="(max-width: 640px)" srcSet="/portraits/2.png" />
-          {/* Medium layout (641–1024px): image is tiny in grid → use portrait 5 */}
-          <source media="(max-width: 1024px)" srcSet="/portraits/5.png" />
-          {/* Wide layout (>1024px): image is sidebar-sized → use portrait 3 */}
-          <img
-            src="/portraits/3.png"
-            alt="Ark Malhotra portrait"
-            className="portrait"
-          />
-        </picture>
+      {/* Quote + Name group — top-left (wide), dissolves at smaller breakpoints */}
+      <div className="name-group">
+        <Quote />
+        <footer className="bottom-bar">
+          <HeroName />
+        </footer>
       </div>
 
-      {/* Bio text on the right */}
-      <main className="content">
-        <Bio />
+      {/* Portrait — bottom-left */}
+      <div className="portrait-column">
+        <img
+          src="/portraits/colour.png"
+          alt="Ark Malhotra portrait"
+          className="portrait"
+        />
+      </div>
+
+      {/* Content — bottom-right, swaps based on nav */}
+      <main className="content" key={view}>
+        <ViewComponent />
       </main>
 
-      {/* Quote above the name */}
-      <Quote />
-
       {/* Navbar — fixed top-right */}
-      <Navbar />
-
-      {/* Bottom row: name pinned to bottom-left */}
-      <footer className="bottom-bar">
-        <HeroName />
-      </footer>
+      <Navbar view={view} onNavigate={setView} />
     </div>
   );
 }

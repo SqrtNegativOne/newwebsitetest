@@ -1,0 +1,1 @@
+have the cursor be a 4x4 square whose colour is only the inverse of whatever it is on

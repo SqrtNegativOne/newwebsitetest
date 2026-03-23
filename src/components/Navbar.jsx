@@ -1,7 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
+const NAV_ITEMS = [
+  { key: "about", label: "About" },
+  { key: "skills", label: "Skills" },
+  { key: "projects", label: "Projects" },
+  { key: "blog", label: "Blog" },
+  { key: "contact", label: "Contact" },
+];
+
+export default function Navbar({ view, onNavigate }) {
+  const [open, setOpen] = useState(true);
   const navRef = useRef(null);
 
   // Close when clicking outside (for mobile tap-to-open)
@@ -17,12 +25,6 @@ export default function Navbar() {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [open]);
-
-  const links = [
-    { label: "Work", href: "#" },
-    { label: "About", href: "#" },
-    { label: "Contact", href: "#" },
-  ];
 
   return (
     <nav
@@ -45,10 +47,17 @@ export default function Navbar() {
         <line x1="4" y1="17" x2="20" y2="17" />
       </svg>
       <div className="nav-links">
-        {links.map((l) => (
-          <a key={l.label} href={l.href} className="nav-link">
-            {l.label}
-          </a>
+        {NAV_ITEMS.map((item) => (
+          <button
+            key={item.key}
+            className={`nav-link${view === item.key ? " active" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onNavigate(item.key);
+            }}
+          >
+            {item.label}
+          </button>
         ))}
       </div>
     </nav>
