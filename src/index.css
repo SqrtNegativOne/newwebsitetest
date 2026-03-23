@@ -1,0 +1,71 @@
+/* ── Reset ─────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url('/cursor.svg') 1 1, auto !important;
+}
+
+/* ── Light theme (daytime default) ─────────────── */
+:root {
+  --bg: #f5f2ed;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --accent: #1a1a1a;
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.45);
+  --glass-shadow: rgba(0, 0, 0, 0.08);
+  --quote-color: #888;
+  --name-color: #1a1a1a;
+}
+
+/* ── Dark theme (nighttime) ────────────────────── */
+[data-theme="dark"] {
+  --bg: #0e0e0e;
+  --text: #e8e8e8;
+  --text-secondary: #aaa;
+  --accent: #e8e8e8;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --quote-color: #777;
+  --name-color: #e8e8e8;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.6s ease, color 0.6s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+/* ── Viewport border frame (like Keita Yamada) ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 40px;
+  border: 1px solid var(--text);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Text selection — inverted colours ────────── */
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
