@@ -306,7 +306,7 @@ There is no love in the past. Only the present.
 
 Life is short. Drive fast, leave a sexy corpse.
 
-The past we do not regret, we mourn. [original]
+The past we do not regret, we mourn.
 
 my five year plan is i get what i want or i die
 
@@ -623,3 +623,5 @@ a violent and irrepressible miracle
 Humanity is a squishy collectively-intelligent architect species, the unwitting participant in a self-stable cosmic joke about a machine that simulates the circumstances of its own invention. Next question
 
 if AI makes things easier, do harder things
+
+waiting for something to happen?

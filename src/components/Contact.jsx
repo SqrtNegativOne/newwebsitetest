@@ -1,3 +1,5 @@
+import "./Contact.css";
+
 export default function Contact() {
   const socials = [
     { name: "GitHub", url: "https://github.com/SqrtNegativOne" },

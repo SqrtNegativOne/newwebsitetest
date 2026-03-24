@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 
-const fonts = [
-  // { family: '"Major Mono Display", monospace', weight: 400 },
-  // { family: '"Plaster", system-ui', weight: 400 },
-  // { family: '"Monoton", sans-serif', weight: 400 },
-  // { family: '"IBM Plex Sans", sans-serif', weight: 700 },
-  { family: '"IBM Plex Sans", sans-serif', weight: 100 },
-];
+// ── Font carousel (commented out for now) ──────────────────────────
+// const fonts = [
+//   { family: '"IBM Plex Sans", sans-serif', weight: 100 },
+//   { family: '"Instrument Serif", serif', weight: 300 },
+// ];
+// ────────────────────────────────────────────────────────────────────
 
 const FULL  = "Ark Malhotra.";
 const SHORT = "Ark.";
@@ -27,55 +26,51 @@ function SplitText({ text, phase }) {
 }
 
 export default function HeroName() {
-  const [fontIndex, setFontIndex] = useState(null);
-  const [phase, setPhase]         = useState("idle");
-  const animating = useRef(false);
-  const timers    = useRef([]);
+  // ── Font carousel logic (commented out) ──────────────────────────
+  // const [fontIndex, setFontIndex] = useState(null);
+  // const [phase, setPhase]         = useState("idle");
+  // const animating = useRef(false);
+  // const timers    = useRef([]);
+  //
+  // useEffect(() => {
+  //   fonts.forEach(({ family, weight }) => {
+  //     const name = family.split(",")[0].replace(/['"]/g, "").trim();
+  //     document.fonts.load(`${weight} 1em "${name}"`);
+  //   });
+  //   return () => timers.current.forEach(clearTimeout);
+  // }, []);
+  //
+  // const handleMouseEnter = () => {
+  //   if (animating.current) return;
+  //   animating.current = true;
+  //   const nextIndex   = fontIndex === null ? 0 : (fontIndex + 1) % fonts.length;
+  //   const n           = FULL.length;
+  //   const stagger     = 22;
+  //   const charDur     = 55;
+  //   const outComplete = (n - 1) * stagger + charDur;
+  //   const hold        = 30;
+  //   setPhase("out");
+  //   const t1 = setTimeout(() => {
+  //     setFontIndex(nextIndex);
+  //     setPhase("in");
+  //   }, outComplete + hold);
+  //   const t2 = setTimeout(() => {
+  //     setPhase("idle");
+  //     animating.current = false;
+  //   }, outComplete + hold + outComplete + 80);
+  //   timers.current = [t1, t2];
+  // };
+  //
+  // const fontStyle = fontIndex !== null
+  //   ? { fontFamily: fonts[fontIndex].family, fontWeight: fonts[fontIndex].weight }
+  //   : {};
+  // ──────────────────────────────────────────────────────────────────
 
-  // Pre-load all fonts so the swap is instant when it happens mid-animation.
-  useEffect(() => {
-    fonts.forEach(({ family, weight }) => {
-      const name = family.split(",")[0].replace(/['"]/g, "").trim();
-      document.fonts.load(`${weight} 1em "${name}"`);
-    });
-    return () => timers.current.forEach(clearTimeout);
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (animating.current) return;
-    animating.current = true;
-
-    const nextIndex   = fontIndex === null ? 0 : (fontIndex + 1) % fonts.length;
-    const n           = FULL.length; // 13 chars
-    const stagger     = 22;          // ms between each char starting
-    const charDur     = 55;          // ms for one char to vanish/appear
-    const outComplete = (n - 1) * stagger + charDur;
-    const hold        = 30;          // brief pause at all-invisible
-
-    setPhase("out");
-
-    // Swap font exactly when all chars are invisible.
-    const t1 = setTimeout(() => {
-      setFontIndex(nextIndex);
-      setPhase("in");
-    }, outComplete + hold);
-
-    // Return to idle after in-phase finishes.
-    const t2 = setTimeout(() => {
-      setPhase("idle");
-      animating.current = false;
-    }, outComplete + hold + outComplete + 80);
-
-    timers.current = [t1, t2];
-  };
-
-  const fontStyle = fontIndex !== null
-    ? { fontFamily: fonts[fontIndex].family, fontWeight: fonts[fontIndex].weight }
-    : {};
+  const [phase] = useState("idle");
 
   return (
     <div className="name-wrapper">
-      <h1 className="name" onMouseEnter={handleMouseEnter} style={fontStyle}>
+      <h1 className="name">
         <span className="name-full">
           <SplitText text={FULL}  phase={phase} />
         </span>

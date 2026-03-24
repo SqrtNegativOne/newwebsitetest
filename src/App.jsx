@@ -1,29 +1,31 @@
-import { useState, useEffect } from "react";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import ThemeToggle from "./components/ThemeToggle";
+import Cursor from "./components/Cursor";
 
 import Bio from "./components/Bio";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
-import Blog from "./components/Blog";
 import Contact from "./components/Contact";
 import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
 import "./App.css";
 
-const views = { about: Bio, skills: Skills, projects: Projects, blog: Blog, contact: Contact };
+// Pages where the portrait should be hidden
+const HIDE_PORTRAIT = ["/skills", "/projects"];
 
 function App() {
-  const [view, setView] = useState("about");
+  const location = useLocation();
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }, []);
+  // Derive the current nav key from the pathname for Navbar highlighting
+  const currentView =
+    location.pathname === "/" ? "about" : location.pathname.slice(1);
 
-  const ViewComponent = views[view];
+  const showPortrait = !HIDE_PORTRAIT.includes(location.pathname);
 
   return (
-    <div className="page">
-      {/* Quote + Name group — top-left (wide), dissolves at smaller breakpoints */}
+    <div className={`page${showPortrait ? "" : " no-portrait"}`}>
+      {/* Quote + Name group — top-left */}
       <div className="name-group">
         <Quote />
         <footer className="bottom-bar">
@@ -31,22 +33,37 @@ function App() {
         </footer>
       </div>
 
-      {/* Portrait — bottom-left */}
-      <div className="portrait-column">
-        <img
-          src="/portraits/colour.png"
-          alt="Ark Malhotra portrait"
-          className="portrait"
-        />
-      </div>
+      {/* Portrait — bottom-left (hidden on skills/projects) */}
+      {showPortrait && (
+        <div className="portrait-column">
+          <img
+            src="/portraits/colour.png"
+            alt="Ark Malhotra portrait"
+            className="portrait"
+          />
+        </div>
+      )}
 
-      {/* Content — bottom-right, swaps based on nav */}
-      <main className="content" key={view}>
-        <ViewComponent />
+      {/* Content — bottom-right, swaps based on route */}
+      <main className="content" key={location.pathname}>
+        <Routes>
+          <Route path="/" element={<Bio />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          {/* Catch-all redirects to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
       {/* Navbar — fixed top-right */}
-      <Navbar view={view} onNavigate={setView} />
+      <Navbar view={currentView} />
+
+      {/* Theme toggle — left border edge */}
+      <ThemeToggle />
+
+      {/* Custom cursor */}
+      <Cursor />
     </div>
   );
 }

@@ -1,16 +1,18 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 const NAV_ITEMS = [
-  { key: "about", label: "About" },
-  { key: "skills", label: "Skills" },
-  { key: "projects", label: "Projects" },
-  { key: "blog", label: "Blog" },
-  { key: "contact", label: "Contact" },
+  { key: "about", label: "About", path: "/" },
+  { key: "skills", label: "Skills", path: "/skills" },
+  { key: "projects", label: "Projects", path: "/projects" },
+  { key: "contact", label: "Contact", path: "/contact" },
 ];
 
-export default function Navbar({ view, onNavigate }) {
+export default function Navbar({ view }) {
   const [open, setOpen] = useState(true);
   const navRef = useRef(null);
+  const navigate = useNavigate();
 
   // Close when clicking outside (for mobile tap-to-open)
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function Navbar({ view, onNavigate }) {
             className={`nav-link${view === item.key ? " active" : ""}`}
             onClick={(e) => {
               e.stopPropagation();
-              onNavigate(item.key);
+              navigate(item.path);
             }}
           >
             {item.label}

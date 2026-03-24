@@ -1,9 +1,16 @@
+import "./Skills.css";
+
 export default function Skills() {
   const skills = [
     { name: "C", icon: "devicon-c-plain" },
     { name: "C++", icon: "devicon-cplusplus-plain" },
     { name: "Python", icon: "devicon-python-plain" },
-    { name: "Django", icon: "devicon-django-plain" },
+    { name: "CSS", icon: "devicon-css3-plain" },
+    { name: "JavaScript", icon: "devicon-javascript-plain" },
+    { name: "FastAPI", icon: "devicon-fastapi-plain" },
+    { name: "LangChain", icon: "devicon-langchain-plain" },
+    { name: "PydanticAI", icon: "devicon-pydantic-plain" },
+    { name: "Figma", icon: "devicon-figma-plain" },
     { name: "Docker", icon: "devicon-docker-plain" },
     { name: "Git", icon: "devicon-git-plain" },
     { name: "Vim", icon: "devicon-vim-plain" },
@@ -14,9 +21,6 @@ export default function Skills() {
 
   return (
     <div className="text-column">
-      <p className="section-intro">
-        Technologies I have touched or have some experience with.
-      </p>
       <div className="skills-grid">
         {skills.map((skill) => (
           <div key={skill.name} className="skill-item">

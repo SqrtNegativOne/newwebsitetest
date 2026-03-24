@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: url('/cursor.svg') 1 1, auto !important;
+  cursor: none !important;
 }
 
 /* ── Light theme (daytime default) ─────────────── */
@@ -37,6 +37,11 @@
 html,
 body {
   height: 100%;
+}
+
+/* On desktop, hide body overflow (content scrolls inside .content).
+   On mobile/medium, allow the page itself to scroll. */
+body {
   overflow: hidden;
 }
 
@@ -62,6 +67,68 @@ body::before {
   opacity: 0.18;
   pointer-events: none;
   z-index: 9999;
+}
+
+@media (max-width: 640px) {
+  body::before {
+    inset: 16px;
+  }
+}
+
+/* ── Theme toggle — sits on the left border edge ── */
+.theme-toggle {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  transform: translateY(-50%);
+  z-index: 10000;
+  background: var(--bg);
+  border: none;
+  padding: 0.2rem 0.6rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .theme-toggle {
+    top: 16px;
+    left: 16px;
+  }
+}
+
+/* ── Custom cursor — inverted circle ──────────── */
+.custom-cursor {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  z-index: 99999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease;
+  will-change: left, top;
+}
+
+.custom-cursor.cursor-expanded {
+  width: 44px;
+  height: 44px;
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor { display: none; }
+  *, *::before, *::after { cursor: auto !important; }
 }
 
 /* ── Text selection — inverted colours ────────── */
