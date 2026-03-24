@@ -116,13 +116,20 @@ body::before {
   z-index: 99999;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease;
+  transition: width 0.2s ease, height 0.2s ease, border-radius 0.2s ease;
   will-change: left, top;
 }
 
 .custom-cursor.cursor-expanded {
   width: 44px;
   height: 44px;
+}
+
+/* Vertical line on text hover */
+.custom-cursor.cursor-text {
+  width: 2px;
+  height: 24px;
+  border-radius: 1px;
 }
 
 /* Hide custom cursor on touch devices */

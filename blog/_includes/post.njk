@@ -1,8 +1,13 @@
 ---
 layout: base.njk
+bodyClass: no-border
 ---
 
+{% if section == "afterdark" %}
+<a href="/blog-afterdark/" class="post-back">&larr; All afterdark posts</a>
+{% else %}
 <a href="/blog/" class="post-back">&larr; All posts</a>
+{% endif %}
 
 <article>
   <header class="post-header">

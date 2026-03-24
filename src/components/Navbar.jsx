@@ -61,6 +61,13 @@ export default function Navbar({ view }) {
             {item.label}
           </button>
         ))}
+        <a
+          className="nav-link"
+          href="/blog/"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Blog
+        </a>
       </div>
     </nav>
   );

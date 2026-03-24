@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ThemeToggle from "./components/ThemeToggle";
 import Cursor from "./components/Cursor";
@@ -7,15 +7,32 @@ import Bio from "./components/Bio";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
+import NotFound from "./components/NotFound";
 import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
 import "./App.css";
+
+// Known React routes — everything else is a 404
+const KNOWN_ROUTES = ["/", "/skills", "/projects", "/contact"];
 
 // Pages where the portrait should be hidden
 const HIDE_PORTRAIT = ["/skills", "/projects"];
 
 function App() {
   const location = useLocation();
+
+  const isKnown = KNOWN_ROUTES.includes(location.pathname);
+
+  // 404 gets its own minimal layout — no name, no portrait, no quote
+  if (!isKnown) {
+    return (
+      <>
+        <NotFound />
+        <ThemeToggle />
+        <Cursor />
+      </>
+    );
+  }
 
   // Derive the current nav key from the pathname for Navbar highlighting
   const currentView =
@@ -51,8 +68,6 @@ function App() {
           <Route path="/skills" element={<Skills />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
-          {/* Catch-all redirects to home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 

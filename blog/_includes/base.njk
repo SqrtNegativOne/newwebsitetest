@@ -22,14 +22,12 @@
       --bg: #f5f2ed;
       --text: #1a1a1a;
       --text-secondary: #555;
-      --border: rgba(0, 0, 0, 0.18);
     }
 
     [data-theme="dark"] {
       --bg: #0e0e0e;
       --text: #e8e8e8;
       --text-secondary: #aaa;
-      --border: rgba(255, 255, 255, 0.18);
     }
 
     html, body {
@@ -54,10 +52,22 @@
       opacity: 0.18;
       pointer-events: none;
       z-index: 9999;
+      transition: opacity 0.4s ease, inset 0.4s ease;
+    }
+
+    body.border-out::before {
+      opacity: 0;
+      inset: 0;
+    }
+
+    /* Post pages: no border */
+    body.no-border::before {
+      display: none;
     }
 
     @media (max-width: 640px) {
       body::before { inset: 16px; }
+      body.border-out::before { inset: 0; }
     }
 
     /* ── Blog layout: two-column with vertical divider ── */
@@ -82,7 +92,6 @@
       font-size: clamp(3rem, 6vw, 5rem);
       line-height: 1;
       color: var(--text);
-      writing-mode: horizontal-tb;
     }
 
     .blog-title em {
@@ -95,6 +104,17 @@
       font-style: normal;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+
+    .blog-title .afterdark-sub {
+      display: block;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.45em;
+      font-style: normal;
+      text-transform: lowercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-top: 0.15em;
     }
 
     /* Vertical divider */
@@ -203,6 +223,7 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      max-width: 520px;
     }
 
     .post-body p {
@@ -292,12 +313,13 @@
     }
   </style>
 </head>
-<body>
+<body class="{{ bodyClass }}">
   <div class="blog-layout">
     <header class="blog-header">
       <h1 class="blog-title">
         <em>the</em>
         <span>BLOG</span>
+        {% if isAfterdark %}<span class="afterdark-sub">afterdark</span>{% endif %}
       </h1>
     </header>
 
@@ -308,5 +330,21 @@
       {{ content | safe }}
     </div>
   </div>
+
+  {% if not bodyClass %}
+  {# Listing pages: animate border out when clicking a post link #}
+  <script>
+    document.querySelectorAll('.post-list-item a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var href = this.href;
+        document.body.classList.add('border-out');
+        setTimeout(function() {
+          window.location.href = href;
+        }, 400);
+      });
+    });
+  </script>
+  {% endif %}
 </body>
 </html>

@@ -29,7 +29,7 @@ export default function (eleventyConfig) {
   return {
     dir: {
       input: "blog",
-      output: "public/blog",
+      output: "public",
       includes: "_includes",
     },
   };

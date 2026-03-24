@@ -99,6 +99,50 @@
   line-height: 1.5;
 }
 
+/* ── 404 page — full viewport, centered ───────── */
+.not-found {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.not-found-code {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: clamp(5rem, 15vw, 12rem);
+  line-height: 1;
+  color: var(--text);
+}
+
+.not-found-message {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 30ch;
+}
+
+.not-found-back {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.not-found-back:hover {
+  color: var(--text);
+}
+
 .bio {
   display: flex;
   flex-direction: column;
@@ -131,6 +175,7 @@
   font-size: 1rem;
   font-style: italic;
   color: var(--quote-color);
+  user-select: none;
   max-width: 70%;
   z-index: 11;
 }
@@ -158,7 +203,6 @@
   color: var(--name-color);
   white-space: nowrap;
   margin: 0;
-  user-select: none;
 }
 
 /* ── Per-character flicker ───────────────────── */
