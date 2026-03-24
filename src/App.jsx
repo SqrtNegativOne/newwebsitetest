@@ -62,7 +62,7 @@ function App() {
       )}
 
       {/* Content — bottom-right, swaps based on route */}
-      <main className="content" key={location.pathname}>
+      <main className={`content${location.pathname === "/projects" ? " content--fill" : ""}`} key={location.pathname}>
         <Routes>
           <Route path="/" element={<Bio />} />
           <Route path="/skills" element={<Skills />} />
