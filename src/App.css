@@ -259,7 +259,13 @@
    Responsive — MEDIUM  (tablet / split-screen)
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 641px) {
-  body { overflow: auto; }
+  /* Keep body hidden; scroll happens inside #root so content clips at the border */
+  #root {
+    position: fixed;
+    inset: 40px;
+    overflow-y: auto;
+    height: auto;
+  }
 
   .page {
     display: grid;
@@ -271,7 +277,7 @@
       "bio       bio";
     padding: 3rem;
     gap: 0.25rem 1.5rem;
-    min-height: 100dvh;
+    min-height: 100%;
     height: auto;
     overflow: visible;
   }
@@ -334,7 +340,13 @@
    Responsive — SMALL  (mobile)
    ══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  body { overflow: auto; }
+  /* Keep body hidden; scroll happens inside #root so content clips at the border */
+  #root {
+    position: fixed;
+    inset: 16px;
+    overflow-y: auto;
+    height: auto;
+  }
 
   .page {
     display: grid;
@@ -347,7 +359,7 @@
       "bio";
     padding: 3rem 1.5rem;
     gap: 0.5rem;
-    min-height: 100dvh;
+    min-height: 100%;
     height: auto;
     overflow: visible;
   }
