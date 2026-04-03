@@ -1,0 +1,33 @@
+.shader-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.shader-image-original {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: opacity 0.4s ease-out;
+  pointer-events: none;
+}
+
+.shader-image-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.4s ease-out;
+  pointer-events: none;
+}
+
+.shader-image-overlay canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

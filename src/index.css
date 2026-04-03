@@ -1,11 +1,17 @@
+@import "tailwindcss";
+
 /* ── Reset ─────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  cursor: none !important;
+/* Wrapped in @layer base so Tailwind utility classes (p-*, m-*, etc.)
+   can properly override it in the cascade. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none !important;
+  }
 }
 
 /* ── Light theme (daytime default) ─────────────── */
@@ -13,6 +19,7 @@
   --bg: #f5f2ed;
   --text: #1a1a1a;
   --text-secondary: #555;
+  --text-secondary-rgb: 85, 85, 85;
   --accent: #1a1a1a;
   --glass-bg: rgba(255, 255, 255, 0.25);
   --glass-border: rgba(255, 255, 255, 0.45);
@@ -26,6 +33,7 @@
   --bg: #0e0e0e;
   --text: #e8e8e8;
   --text-secondary: #aaa;
+  --text-secondary-rgb: 170, 170, 170;
   --accent: #e8e8e8;
   --glass-bg: rgba(255, 255, 255, 0.08);
   --glass-border: rgba(255, 255, 255, 0.15);
