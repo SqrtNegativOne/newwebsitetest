@@ -10,16 +10,20 @@ import Contact from "./components/Contact";
 import NotFound from "./components/NotFound";
 import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
+import HalftoneImage from "./components/HalftoneImage";
+import Home from "./components/Home";
+import { useQuote } from "./hooks/useQuote";
 import "./App.css";
 
 // Known React routes — everything else is a 404
-const KNOWN_ROUTES = ["/", "/skills", "/projects", "/contact"];
+const KNOWN_ROUTES = ["/", "/about", "/skills", "/projects", "/contact"];
 
 // Pages where the portrait should be hidden
 const HIDE_PORTRAIT = ["/skills", "/projects"];
 
 function App() {
   const location = useLocation();
+  const quote = useQuote();
 
   const isKnown = KNOWN_ROUTES.includes(location.pathname);
 
@@ -34,9 +38,24 @@ function App() {
     );
   }
 
+  // Home gets a full-screen layout — canvas + name/quote overlay + nav + cursor
+  if (location.pathname === "/") {
+    return (
+      <>
+        <Home />
+        <div className="home-name-overlay">
+          <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
+          <HeroName />
+        </div>
+        <Navbar view="home" />
+        <ThemeToggle />
+        <Cursor />
+      </>
+    );
+  }
+
   // Derive the current nav key from the pathname for Navbar highlighting
-  const currentView =
-    location.pathname === "/" ? "about" : location.pathname.slice(1);
+  const currentView = location.pathname.slice(1); // "about", "skills", "projects", "contact"
 
   const showPortrait = !HIDE_PORTRAIT.includes(location.pathname);
 
@@ -44,7 +63,7 @@ function App() {
     <div className={`page${showPortrait ? "" : " no-portrait"}`}>
       {/* Quote + Name group — top-left */}
       <div className="name-group">
-        <Quote />
+        <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
         <footer className="bottom-bar">
           <HeroName />
         </footer>
@@ -53,8 +72,8 @@ function App() {
       {/* Portrait — bottom-left (hidden on skills/projects) */}
       {showPortrait && (
         <div className="portrait-column">
-          <img
-            src="/portraits/colour.png"
+          <HalftoneImage
+            src="/portraits/tower.jpg"
             alt="Ark Malhotra portrait"
             className="portrait"
           />
@@ -64,7 +83,7 @@ function App() {
       {/* Content — bottom-right, swaps based on route */}
       <main className={`content${location.pathname === "/projects" || location.pathname === "/skills" ? " content--fill" : ""}`} key={location.pathname}>
         <Routes>
-          <Route path="/" element={<Bio />} />
+          <Route path="/about" element={<Bio />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />

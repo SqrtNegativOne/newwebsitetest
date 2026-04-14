@@ -1,7 +1,7 @@
 export default function Bio() {
   return (
     <div className="text-column">
-      <p className="greeting">Hi!</p>
+      <p>Hi!</p>
 
       <div className="bio">
         <p>

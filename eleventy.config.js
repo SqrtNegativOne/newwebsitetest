@@ -1,4 +1,12 @@
+import markdownIt from "markdown-it";
+import markdownItFootnote from "markdown-it-footnote";
+
 export default function (eleventyConfig) {
+  // Markdown with footnote support
+  const md = markdownIt({ html: true, linkify: true, typographer: true });
+  md.use(markdownItFootnote);
+  eleventyConfig.setLibrary("md", md);
+
   // Pass through any static assets inside blog/
   eleventyConfig.addPassthroughCopy({ "blog/assets": "assets" });
 

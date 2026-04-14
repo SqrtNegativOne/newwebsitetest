@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const NAV_ITEMS = [
-  { key: "about", label: "About", path: "/" },
+  { key: "home", label: "Home", path: "/" },
+  { key: "about", label: "About", path: "/about" },
   { key: "skills", label: "Skills", path: "/skills" },
   { key: "projects", label: "Projects", path: "/projects" },
   { key: "contact", label: "Contact", path: "/contact" },
