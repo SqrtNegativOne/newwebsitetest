@@ -77,6 +77,21 @@
       padding: 4rem;
     }
 
+    /* Single post: center content, no side header */
+    .blog-layout.is-post {
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .blog-layout.is-post .blog-content {
+      padding-left: 0;
+      padding-top: 0;
+      max-width: 640px;
+      width: 100%;
+      max-height: none;
+      overflow-y: visible;
+    }
+
     /* Left panel: "the BLOG" title */
     .blog-header {
       flex-shrink: 0;
@@ -313,8 +328,10 @@
     }
   </style>
 </head>
+{% set isPost = bodyClass == "no-border" %}
 <body class="{{ bodyClass }}">
-  <div class="blog-layout">
+  <div class="blog-layout{% if isPost %} is-post{% endif %}">
+    {% if not isPost %}
     <header class="blog-header">
       <h1 class="blog-title">
         <em>the</em>
@@ -324,9 +341,12 @@
     </header>
 
     <div class="blog-divider"></div>
+    {% endif %}
 
     <div class="blog-content">
+      {% if not isPost %}
       <a href="/" class="blog-home-link">&larr; Back to site</a>
+      {% endif %}
       {{ content | safe }}
     </div>
   </div>

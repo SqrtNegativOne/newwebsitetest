@@ -52,15 +52,6 @@
   transition: width 0.15s ease;
 }
 
-/* ── Label ──────────────────────────────────────── */
-.carousel-label {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.55rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.1em;
-  opacity: 0.4;
-}
-
 @media (max-width: 640px) {
   .carousel-track {
     padding-right: 1rem;

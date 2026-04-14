@@ -33,7 +33,6 @@ export default function ProjectCarousel({ projects }) {
         />
       </div>
 
-      <span className="carousel-label">{projects.length} projects — scroll to browse</span>
     </div>
   );
 }

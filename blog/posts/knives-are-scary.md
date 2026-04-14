@@ -32,4 +32,4 @@ Guns are long range. They distance the killer from their victims. They make invi
 
 Knives necessitate the visibility of this moral transaction that guns conceal. The gun is shown to be the quotidian tool for both the Good and the Bad. The knife is the weapon of psychopaths or the desperate. Its usage means the wielder has consciously agreed to the moral transaction and bartered a piece of their soul to use it. They at least partially comprehend the reality about the infinite irreality they are about to plunge their victim into.
 
-**Knives are scary.**
+Knives are scary.
